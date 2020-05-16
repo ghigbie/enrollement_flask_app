@@ -1,13 +1,6 @@
+{% extends "layout.html" %}
 
-{% include "includes/dochead.html" %}
-
-    <div class="container-fluid text-center top-container">
-        <img src="static/images/uta-logo-200.png">
-    </div>
-    <div class="container">
-
-        {% include "includes/nav.html" %}
-
+{% block content %}
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1>Welcome to Universal Tech Academy.</h1>
@@ -20,6 +13,5 @@
 
             </div>
         </div>
-    </div>
 
-{% include "includes/footer.html" %}
+{% endblock %}

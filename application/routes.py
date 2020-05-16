@@ -8,13 +8,13 @@ def index():
     return render_template("index.html", login=True)
 
 @app.route("/login")
-def index():
+def login():
     return render_template("login.html")
 
 @app.route("/courses")
-def index():
+def courses():
     return render_template("courses.html")
 
 @app.route("/register")
-def index():
-    return render_template("ergister.html")
+def register():
+    return render_template("register.html")
