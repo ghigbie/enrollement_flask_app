@@ -46,3 +46,15 @@ def api(idx=None):
     return Response(json.dumps(jdata), mimetype="application/json")
 
 class User(db.Document):
+    user_id = db.IntField( unique=True )
+    first_name = db.StringField( max_length=50 )
+    last_name = db.StringField( max_length=50 )
+    email = db.StringField( max_length=30 )
+    password = db.StringField( max_length=30 )
+
+@app.route("/user")
+def user():
+   # User(user_id=3, first_name="Ben", last_name="Hur", email="benhur@gmail.com", password="abc1234").save()
+   # User(user_id=4, first_name="Mary", last_name="Hur", email="maryhur@gmail.com", password="abc1234").save()
+    users = User.objects.all()
+    return render_template("user.html", users=users)
