@@ -4,16 +4,18 @@
 <div class="row">
     <div class="col-md-12 text-center">
 
-        {% for user in users %}
-        <dl>
-            <dt>User ID: {{ user.user_id }}</dt>
-            <dd>Email: {{ user.email }}</dd>
-            <dd>Password: {{ user.passsword }}</dd>
-        </dl>
+        {% if users %}
+            {% for user in users %}
+            <dl>
+                <dt>User ID: {{ user.user_id }}</dt>
+                <dd>Email: {{ user.email }}</dd>
+                <dd>Password: {{ user.passsword }}</dd>
+            </dl>
+            {% endfor %}
         {% else %}
             <h3>No users have been added yet...</h3>
-        {% endfor %}
-
+        {% endif %}
+        
     </div>
 </div>
 
