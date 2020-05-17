@@ -1,3 +1,3 @@
 # Enrollment App
 
-A flask and python app
+A flask and python app.
