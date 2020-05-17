@@ -1,5 +1,7 @@
 from application import app
-from flask import render_template, request
+from flask import render_template, request, Response, json
+
+course_data = [{"courseID":"1111","title":"PHP 111","description":"Intro to PHP","credits":"3","term":"Fall, Spring"}, {"courseID":"2222","title":"Java 1","description":"Intro to Java Programming","credits":"4","term":"Spring"}, {"courseID":"3333","title":"Adv PHP 201","description":"Advanced PHP Programming","credits":"3","term":"Fall"}, {"courseID":"4444","title":"Angular 1","description":"Intro to Angular","credits":"3","term":"Fall, Spring"}, {"courseID":"5555","title":"Java 2","description":"Advanced Java Programming","credits":"4","term":"Fall"}]
 
 @app.route("/")
 @app.route("/home")
@@ -14,8 +16,6 @@ def login():
 @app.route("/courses")
 @app.route("/courses/<term>")
 def courses(term="2020"):
-    course_data = [{"courseID":"1111","title":"PHP 111","description":"Intro to PHP","credits":"3","term":"Fall, Spring"}, {"courseID":"2222","title":"Java 1","description":"Intro to Java Programming","credits":"4","term":"Spring"}, {"courseID":"3333","title":"Adv PHP 201","description":"Advanced PHP Programming","credits":"3","term":"Fall"}, {"courseID":"4444","title":"Angular 1","description":"Intro to Angular","credits":"3","term":"Fall, Spring"}, {"courseID":"5555","title":"Java 2","description":"Advanced Java Programming","credits":"4","term":"Fall"}]
-
     return render_template("courses.html", course_data=course_data, courses=True, term=term)
 
 @app.route("/register")
@@ -25,12 +25,23 @@ def register():
 
 @app.route("/enrollment", methods=["GET", "POST"])
 def enrollment():
-    id = request.args.get('courseID')
-    title = request.args.get('courseTitle')
-    term = request.args.get('term')
+    id = request.form.get('courseID')
+    title = request.form.get('courseTitle')
+    term = request.form.get('term')
     data = {
         "id": id,
         "title": title,
         "term": term
     }
     return render_template("enrollment.html", enrollment=True, data=data)
+
+@app.route("/api/")
+@app.route("/api/<idx>")
+def api(idx=None):
+    if(idx == None):
+        jdata = course_data
+    else:
+        jdata = course_data[int(idx)] #idx is coming back from url as a string, and it must be cast as an index
+    
+    return Response(json.dumps(jdata), mimetype="application/json")
+
