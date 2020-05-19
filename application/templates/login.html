@@ -10,12 +10,12 @@
             <form name="login" action="" method="post">
                 {{ form.hidden_tag() }}
                 <p>
-                    {{ form.email}}
+                    {{ form.email.label }}
                     <br>
                     {{ form.email(size=35) }}
                 </p>
                 <p>
-                    {{ form.password }}
+                    {{ form.password.label }}
                     <br>
                     {{ form.password(size=25) }}
                 </p>

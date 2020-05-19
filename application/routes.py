@@ -24,7 +24,7 @@ def courses(term="2020"):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
-    return render_template("register.html", form=form, title="Register" register=True)
+    return render_template("register.html", form=form, title="Register", register=True)
 
 
 @app.route("/enrollment", methods=["GET", "POST"])

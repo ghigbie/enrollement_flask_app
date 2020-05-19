@@ -15,7 +15,6 @@ class Course(db.Document):
     credits = db.IntField()
     term = db.StringField(max_length=25)
 
-class Enrollemnt(db.Document):
+class Enrollment(db.Document):
     user_id = db.IntField()
     course_id = db.StringField(max_length=10)
-    
