@@ -30,6 +30,12 @@ def courses(term="2020"):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
+    if form.validate_on_submit():
+        if request.form.get("email") == "test@uta.com":
+            flash("You are successfully registered! Please login", "success")
+            return redirect("/index")
+        else:
+            flash("Sorry, something went wrong : (", "danger")      
     return render_template("register.html", form=form, title="Register", register=True)
 
 
