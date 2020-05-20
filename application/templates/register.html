@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 
 {% block content %}
+    <h1>{{title}}</h1>
 
-    <div class="container">
         <form name="register" action="" method="post">
             {{ form.hidden_tag() }}
 
@@ -36,6 +36,6 @@
                 {{ form.submit()}}
             </p>
         </form>
-    </div>
+
 
 {% endblock %}
