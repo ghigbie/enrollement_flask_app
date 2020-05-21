@@ -8,6 +8,12 @@ class User(db.Document):
     email = db.StringField( max_length=30 )
     password = db.StringField( max_length=30 )
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+    
+    def get_password(self, password):
+        return check_password_hash(self.password, password)
+
 class Course(db.Document):
     course_id = db.StringField(max_length=10, nique=True)
     title = db.StringField(max_length=100)
