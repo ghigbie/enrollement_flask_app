@@ -1,5 +1,5 @@
 from application import app, db
-from flask import render_template, request, Response, json, flash, redirect
+from flask import render_template, request, Response, json, flash, redirect, url_for
 from application.models import User, Course, Enrollment
 from application.forms import LoginForm, RegisterForm
 
@@ -15,9 +15,13 @@ def index():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if request.form.get("email") == "test@uta.com":
-            flash("You are successfully logged in!", "success")
-            return redirect("/index")
+        email = form.email.data
+        password = form.password.data
+
+        user = User.objects(email=email).first()
+        if user and user.get_password(password): #chekcs password agains password hash
+            flash(f"{user.first_name}, you are successfully logged in!", "success")
+            return redirect(url_for("index")
         else:
             flash("Sorry, something went wrong : (", "danger")
     return render_template("login.html", form=form, title="Login", login_nav=True)
@@ -31,6 +35,20 @@ def courses(term="2020"):
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        user_id = User.objects.count()
+        user_id += 1
+
+        email = form.email.data
+        password = form.password.data
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+
+        user = User(user_id, email=email, first_name=first_name, last_name=last_name)
+        user.set_password()
+        user.save()
+        flash("You are successfully registered", "success")
+        return redirect(url_for("index")
+
         if request.form.get("email") == "test@uta.com":
             flash("You are successfully registered! Please login", "success")
             return redirect("/index")
