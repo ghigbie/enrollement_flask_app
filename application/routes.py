@@ -21,15 +21,20 @@ def login():
         user = User.objects(email=email).first()
         if user and user.get_password(password): #chekcs password agains password hash
             flash(f"{user.first_name}, you are successfully logged in!", "success")
-            return redirect(url_for("index")
+            return redirect(url_for("index"))
         else:
             flash("Sorry, something went wrong : (", "danger")
     return render_template("login.html", form=form, title="Login", login_nav=True)
 
 @app.route("/courses")
 @app.route("/courses/<term>")
-def courses(term="2020"):
-    return render_template("courses.html", course_data=course_data, courses=True, term=term)
+def courses(term=None):
+    if term is None:
+        term = "Spring 2020"
+    classes = Course.objects.order_by("+courseID")
+    if len(classes) is 0:
+        classes = course_data
+    return render_template("courses.html", course_data=classes, courses=True, term=term)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -43,17 +48,11 @@ def register():
         first_name = form.first_name.data
         last_name = form.last_name.data
 
-        user = User(user_id, email=email, first_name=first_name, last_name=last_name)
-        user.set_password()
+        user = User(user_id=user_id, email=email, first_name=first_name, last_name=last_name)
+        user.set_password(password)
         user.save()
         flash("You are successfully registered", "success")
-        return redirect(url_for("index")
-
-        if request.form.get("email") == "test@uta.com":
-            flash("You are successfully registered! Please login", "success")
-            return redirect("/index")
-        else:
-            flash("Sorry, something went wrong : (", "danger")      
+        return redirect(url_for("index"))
     return render_template("register.html", form=form, title="Register", register=True)
 
 
