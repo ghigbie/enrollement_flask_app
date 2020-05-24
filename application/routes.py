@@ -60,6 +60,7 @@ def register():
 def enrollment():
     courseID = request.form.get('courseID')
     courseTitle = request.form.get('courseTitle')
+    user_id = 1
 
     if courseID:
         if Enrollment.objects(user_id=user_id, courseID=courseID):
@@ -68,9 +69,11 @@ def enrollment():
         else:
             Enrollment(user_id=user_id, courseID=courseID)
             flash(f"You are successfully enrolled in {courseTitle}!", "sucess")
+    classes = None
+    
     term = request.form.get('term')
 
-    return render_template("enrollment.html", enrollment=True, data=data)
+    return render_template("enrollment.html", enrollment=True, classes=classes)
 
 @app.route("/api/")
 @app.route("/api/<idx>")
